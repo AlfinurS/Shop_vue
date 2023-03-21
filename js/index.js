@@ -21,24 +21,28 @@ const app = Vue.createApp({
         },
 
         addProduct(product){
-            this.cart.push(product);
-            console.log(productCart);
+            const index = this.products.findIndex((item) => item.id_product === product.id_product);
+            let productFind = this.cart.find(product => product.id_product === this.products[index].id_product);
+            console.log(productFind);
+            if (productFind) {
+                productFind.quantity++;
+                //this.showCart(productFind)
+            }
+        },
 
+        showCart(){
+            console.log("ok");
         }
     },
     mounted(){
         this.getJson(`${API + this.catalogUrl}`)
             .then(data => {
-                for(let el of data){
-                    this.products.push(el);
-                }
+                this.products = [...data];
             })
 
         this.getJson(`${API + this.cartUrl}`)
             .then(data => {
-                for(let el of data.contents){
-                    this.products.push(el);
-                }
+               this.cart = data.contents;
             })
     }
 })

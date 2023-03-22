@@ -19,15 +19,15 @@
                   <i class="fas fa-search"></i>
               </button>
           </form>
-          <button class="btn-cart" type="button" @click="showCart(productFind)">Корзина</button>
-          <div class="cart-block">
-            <div class="product-item" v-for="productFind in cart" :key="product.id_product">
+          <button class="btn-cart" type="button" @click="isShowCart = !isShowCart">Корзина</button>
+          <div class="cart-block" v-if="isShowCart">
+            <p v-if="cart.length === 0">Корзина пустая</p>
+            <div class="cart-block-item" v-for="product in cart" :key="product.id_product">
               <img :src="imgCatalog" alt="Some img">
-              <div class="desc">
-                  <h3>{{product.product_name}}</h3>
-                  <p>{{product.price}} $</p>
-                  <button class="buy-btn" @click="addProduct(product)">Купить</button>
-              </div>
+              <h3>{{product.product_name}}</h3>
+              <p>{{product.price * product.quantity}} $</p>
+              <p>{{product.quantity}} шт</p>
+              <button class="delete-btn" @click="deleteProduct(product)">Удалить</button>
           </div>
       </div>
   </header>
